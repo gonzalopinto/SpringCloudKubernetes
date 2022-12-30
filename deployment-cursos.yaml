@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msvc-cursos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msvc-cursos
+  template:
+    metadata:
+      labels:
+        app: msvc-cursos
+    spec:
+      containers:
+        - image: delicatessen23/cursos:latest
+          name: cursos
+          ports:
+            - containerPort: 8002
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-cursos
+                  key: port
+#              value: "8002"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-cursos
+                  key: db_host
+#              value: "postgres14:5432"
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-cursos
+                  key: database
+#              value: msvc_cursos
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: msvc-cursos
+                  key: username
+#              value: postgres
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: msvc-cursos
+                  key: password
+#              value: sasa
+            - name: USUARIOS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-cursos
+                  key: usuario_url
+#              value: "msvc-usuarios:8001"

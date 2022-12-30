@@ -1,0 +1,19 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${LB_AUTH_ISSUER_URI:http://127.0.0.1:9000}
+      client:
+        registration:
+          msvc-usuarios-client:
+            provider: spring
+            clientId: usuarios-client
+            clientSecret: 12345
+            authorizationGrantType: authorization_code
+            redirectUri: ${LB_USUARIOS_URI:http://127.0.0.1:8080}/authorized
+            scope: read, write
+            clientName: msvc-usuarios-client
+        provider:
+          spring:
+            issuerUri: ${LB_AUTH_ISSUER_URI:http://127.0.0.1:9000}

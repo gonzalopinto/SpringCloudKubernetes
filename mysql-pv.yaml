@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+#  storageClassName: standard
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+#    - ReadWriteOnce
+  hostPath:
+    path: /var/lib/mysql
+    type: DirectoryOrCreate
+
+# PERSISTENT VOLUME AWS
+#  csi:
+#    driver: efs.csi.aws.com
+#    volumeHandle: fs-056bf8c530499fa25
